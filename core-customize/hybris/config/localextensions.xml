@@ -16,6 +16,12 @@
     <extension name='yacceleratorcore' />
     <extension name='yacceleratorstorefront' />
     <extension name='electronicsstore' />
+    <extension name='apparelstore' />
+    <extension name='spartacussampledataaddon' />
+    <extension name='powertoolsstore' />
+    <extension name='b2bcommercebackoffice' />
+    <extension name='b2bacceleratoraddon' />
+    <extension name='commerceorgaddon' />
     <extension name='acceleratorwebservicesaddon' />
     <extension name='orderselfserviceaddon' />
     <extension name='customersupportbackoffice' />
@@ -91,6 +97,8 @@
     <extension name="saporderexchangebackoffice"/>
     <extension name="sapcoreaddon"/>-->
 
+<!-- B2B Accelerator-->
+    <extension name='yb2bacceleratorstorefront' />
 
   </extensions>
 </hybrisconfig>
