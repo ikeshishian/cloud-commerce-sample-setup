@@ -53,12 +53,12 @@
     "storefrontAddons": [
         {
             "addon": "spartacussampledataaddon",
-            "storefront": "yacceleratorstorefront, yb2bacceleratorstorefront",
+            "storefront": ["yacceleratorstorefront","yb2bacceleratorstorefront"],
             "template": "yacceleratorstorefront"
         },
         {
             "addon": "commerceorgsamplesaddon",
-            "storefront": "yacceleratorstorefront, yb2bacceleratorstorefront",
+            "storefront": ["yacceleratorstorefront","yb2bacceleratorstorefront"],
             "template": "yacceleratorstorefront"
         },
         {
