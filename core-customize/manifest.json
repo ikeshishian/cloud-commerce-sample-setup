@@ -53,12 +53,17 @@
     "storefrontAddons": [
         {
             "addon": "spartacussampledataaddon",
-            "storefront": "yacceleratorstorefront",
+            "storefront": "yacceleratorstorefront, yb2bacceleratorstorefront",
             "template": "yacceleratorstorefront"
         },
         {
             "addon": "commerceorgsamplesaddon",
-            "storefront": "yacceleratorstorefront",
+            "storefront": "yacceleratorstorefront, yb2bacceleratorstorefront",
+            "template": "yacceleratorstorefront"
+        },
+        {
+            "addon": "b2bacceleratoraddon",
+            "storefront": "yb2bacceleratorstorefront",
             "template": "yacceleratorstorefront"
         },
         {
@@ -187,6 +192,10 @@
                 {
                     "key": "storefrontContextRoot",
                     "value": ""
+                },
+                {
+                    "key": "b2bstorefrontContextRoot",
+                    "value": ""
                 }
             ],
             "webapps": [
@@ -200,6 +209,10 @@
                 },
                 {
                     "name": "yacceleratorstorefront",
+                    "contextPath": ""
+                },
+                {
+                    "name": "yb2bacceleratorstorefront",
                     "contextPath": ""
                 },
                 {
@@ -245,6 +258,10 @@
                 {
                     "key": "storefrontContextRoot",
                     "value": "/yacceleratorstorefront"
+                },
+                {
+                    "key": "b2bstorefrontContextRoot",
+                    "value": "/yb2bacceleratorstorefront"
                 }
             ],
             "webapps": [
@@ -259,6 +276,10 @@
                 {
                     "name": "yacceleratorstorefront",
                     "contextPath": "/yacceleratorstorefront"
+                },
+                {
+                    "name": "yb2bacceleratorstorefront",
+                    "contextPath": "/yb2bacceleratorstorefront"
                 },
                 {
                     "name": "smartedit",
