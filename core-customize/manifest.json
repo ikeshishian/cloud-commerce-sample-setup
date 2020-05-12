@@ -208,10 +208,6 @@
                     "contextPath": ""
                 },
                 {
-                    "name": "yb2bacceleratorstorefront",
-                    "contextPath": "/yb2bacceleratorstorefront"
-                },
-                {
                     "name": "acceleratorservices",
                     "contextPath": "/acceleratorservices"
                 }
@@ -268,10 +264,6 @@
                 {
                     "name": "yacceleratorstorefront",
                     "contextPath": "/yacceleratorstorefront"
-                },
-                {
-                    "name": "yb2bacceleratorstorefront",
-                    "contextPath": "/yb2bacceleratorstorefront"
                 },
                 {
                     "name": "smartedit",
