@@ -204,7 +204,7 @@
                     "contextPath": "/medias"
                 },
                 {
-                    "name": "yacceleratorstorefront",
+                    "name": "yb2bacceleratorstorefront",
                     "contextPath": ""
                 },
                 {
@@ -249,7 +249,7 @@
                 },
                 {
                     "key": "storefrontContextRoot",
-                    "value": "/yacceleratorstorefront"
+                    "value": "/yb2bacceleratorstorefront"
                 }
             ],
             "webapps": [
@@ -262,8 +262,8 @@
                     "contextPath": "/rest"
                 },
                 {
-                    "name": "yacceleratorstorefront",
-                    "contextPath": "/yacceleratorstorefront"
+                    "name": "yb2bacceleratorstorefront",
+                    "contextPath": "/yb2bacceleratorstorefront"
                 },
                 {
                     "name": "smartedit",
