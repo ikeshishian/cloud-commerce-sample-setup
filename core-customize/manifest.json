@@ -209,7 +209,7 @@
                 },
                 {
                     "name": "yb2bacceleratorstorefront",
-                    "contextPath": ""
+                    "contextPath": "/yb2bacceleratorstorefront"
                 },
                 {
                     "name": "acceleratorservices",
