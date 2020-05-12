@@ -209,7 +209,7 @@
                 },
                 {
                     "name": "yb2bacceleratorstorefront",
-                    "contextPath": "/yb2bacceleratorstorefront"
+                    "contextPath": ""
                 },
                 {
                     "name": "acceleratorservices",
@@ -254,10 +254,6 @@
                 {
                     "key": "storefrontContextRoot",
                     "value": "/yacceleratorstorefront"
-                },
-                {
-                    "key": "b2bstorefrontContextRoot",
-                    "value": "/yb2bacceleratorstorefront"
                 }
             ],
             "webapps": [
