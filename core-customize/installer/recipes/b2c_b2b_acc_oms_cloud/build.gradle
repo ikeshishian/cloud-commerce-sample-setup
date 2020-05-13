@@ -1,0 +1,866 @@
+apply plugin: 'installer-platform-plugin'
+apply plugin: 'installer-addon2-plugin'
+
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+
+    dependencies {
+    }
+}
+
+ext {
+    workDir = "./work"
+}
+
+def platform = platform {
+    localProperties {
+        '# place your custom properties into this file instead of modifying the project.properties'
+        '# all properties in this file have higher priority and will overwrite the platform/project.properties settings.'
+
+        property '#mykey', '#myvalue'
+        property '#hac.webroot', '/hac'
+
+        property 'googleApiKey', ''
+
+        property 'website.electronics.http', 'http://electronics.local:9001/yacceleratorstorefront'
+        property 'website.electronics.https', 'https://electronics.local:9002/yacceleratorstorefront'
+        property 'website.apparel-de.http', 'http://apparel-de.local:9001/yacceleratorstorefront'
+        property 'website.apparel-de.https', 'https://apparel-de.local:9002/yacceleratorstorefront'
+        property 'website.apparel-uk.http', 'http://apparel-uk.local:9001/yacceleratorstorefront'
+        property 'website.apparel-uk.https', 'https://apparel-uk.local:9002/yacceleratorstorefront'
+        property 'website.powertools.http', 'http://powertools.local:9001/yb2bacceleratorstorefront'
+        property 'website.powertools.https', 'https://powertools.local:9002/yb2bacceleratorstorefront'
+        property 'apiregistryservices.events.exporting', 'false'
+        property 'yb2bacceleratorstorefront.illegalrequirementstest.excluded', 'true'
+        property 'multicountrysampledataaddon.import.active', 'false'
+
+        property 'csrf.allowed.url.patterns', '/[^/]+(/[^?]*)+(sop/response)$,/[^/]+(/[^?]*)+(merchant_callback)$,/[^/]+(/[^?]*)+(hop/response)$,/[^/]+(/[^?]*)+(language)$,/[^/]+(/[^?]*)+(currency)$,/(events)$'
+
+        property 'piwik.tracker.url.electronics', '/yacceleratorstorefront/events'
+        property 'piwik.tracker.https.url.electronics', '/yacceleratorstorefront/events'
+        property 'piwik.tracker.url.apparel-uk', '/yacceleratorstorefront/events'
+        property 'piwik.tracker.https.url.apparel-uk', '/yacceleratorstorefront/events'
+        property 'piwik.tracker.url.apparel-de', '/yacceleratorstorefront/events'
+        property 'piwik.tracker.https.url.apparel-de', '/yacceleratorstorefront/events'
+
+        property 'sapymktcommon.odata.url.root', 'https://my300000.s4hana.ondemand.com'
+        property 'sapymktcommon.odata.url.sap-client', ''
+        property 'sapymktcommon.odata.url.user', 'username'
+        property 'sapymktcommon.odata.url.password', 'password'
+
+        property 'sapymktcommon.product.imagePrefix', 'https://localhost:9002'
+        property 'sapymktcommon.product.navPrefix', 'https://localhost:9002/yacceleratorstorefront/p/'
+        property 'sapymktcommon.product.navSuffix', '?site=electronics'
+
+        property 'sapymktclickstream.listener.events.batchSize', '1'
+        property 'sapymktsegmentation.campaign_category_id', ''
+        property 'occ.rewrite.overlapping.paths.enabled', 'true' // for being able to run B2C & B2B alongside each other
+       property 'sapproductconfig.providerFactoryBeanName', 'sapProductConfigCPSProviderFactory' // activate CPS and not Mock by default
+}
+
+    afterSetup {
+        ensureAdminPasswordSet()
+    }
+
+    extensions {
+    extensionNames
+    // extgened extensions
+        extName 'yb2bacceleratorstorefront'
+    // adaptive-search
+        // extName 'adaptivesearch'
+        extName 'adaptivesearchbackoffice'
+        // extName 'adaptivesearchfacades'
+        extName 'adaptivesearchsamplesaddon'
+        extName 'adaptivesearchsolr'
+        // extName 'adaptivesearchwebservices'
+    // api-registry
+        // extName 'apiregistrybackoffice'
+        // extName 'apiregistryservices'
+    // assisted-services
+        // extName 'assistedservicecustomerinterestsaddon'
+        // extName 'assistedservicecustomerinterestsfacades'
+        // extName 'assistedservicefacades'
+        // extName 'assistedservicepromotionaddon'
+        // extName 'assistedservicepromotionfacades'
+        // extName 'assistedserviceservices'
+        extName 'assistedservicestorefront'
+        extName 'assistedservicewebservices'
+    // assisted-services-integrations
+        // extName 'assistedserviceyprofileaddon'
+        // extName 'assistedserviceyprofilefacades'
+        // extName 'yaasyprofileconnect'
+    // b2b-accelerator
+        extName 'b2bacceleratoraddon'
+        // extName 'b2bacceleratorfacades'
+        // extName 'b2bacceleratorservices'
+        extName 'commerceorgaddon'
+        extName 'commerceorgsamplesaddon'
+        extName 'powertoolsstore'
+    // b2b-accelerator-addons
+        // extName 'accountsummaryaddon'
+        // extName 'b2boccaddon'
+        // extName 'b2bpunchout'
+        // extName 'b2bpunchoutaddon'
+        // extName 'savedorderforms'
+        // extName 'savedorderformsoccaddon'
+        // extName 'secureportaladdon'
+    // b2b-commerce
+        // extName 'b2bapprovalprocess'
+        // extName 'b2bapprovalprocessfacades'
+        // extName 'b2bcommerce'
+        extName 'b2bcommercebackoffice'
+        // extName 'b2bcommercefacades'
+    // b2c-accelerator
+        extName 'apparelstore'
+        extName 'electronicsstore'
+    // b2c-accelerator-addons
+        // extName 'captchaaddon'
+        // extName 'hybrisanalyticsaddon'
+        extName 'multicountrysampledataaddon'
+        // extName 'wishlist'
+    // backoffice-addons
+        extName 'pcmbackofficesamplesaddon'
+    // backoffice-applications
+        // extName 'y2ysyncbackoffice' // deprecated
+        // extName 'mediaconversionbackoffice'
+        // extName 'patchesbackoffice'
+        // extName 'pcmbackoffice'
+        // extName 'samlssobackoffice'
+    // backoffice-framework
+        // extName 'backoffice'
+        // extName 'backofficesolrsearch'
+        // extName 'platformbackoffice'
+        // extName 'ybackoffice'
+    // base-accelerator
+        // extName 'yacceleratorcockpits' // deprecated
+        extName 'yacceleratorbackoffice'
+        // extName 'yacceleratorcore'
+        // extName 'yacceleratorfacades'
+        // extName 'yacceleratorfulfilmentprocess'
+        extName 'yacceleratorinitialdata'
+        extName 'yacceleratorstorefront'
+        // extName 'yacceleratortest'
+        extName 'yaddon'
+    // base-commerce
+        // extName 'basecommerce'
+        // extName 'basecommercebackoffice'
+        // extName 'customerreview'
+        // extName 'payment'
+        // extName 'promotions'
+        // extName 'promotionsbackoffice'
+        // extName 'voucher'
+        // extName 'voucherbackoffice'
+    // cds-integration
+        // extName 'profileservices'
+        // extName 'profiletagaddon'
+    // cds-merchandising
+        // extName 'merchandisingaddon'
+        // extName 'merchandisingcmswebservices'
+        // extName 'merchandisingservices'
+        // extName 'merchandisingservicesbackoffice'
+        // extName 'merchandisingsmartedit'
+        // extName 'merchandisingstorefrontsampledataaddon'
+    // china-accelerator-addons
+        // extName 'chineseproductsharingaddon'
+        // extName 'chinesestoreaddon'
+        // extName 'chinesestoreservices'
+        // extName 'verticalnavigationaddon'
+    // china-accelerator-address
+        // extName 'chineseaddressaddon'
+        // extName 'chineseaddressbackoffice'
+        // extName 'chineseaddressfacades'
+        // extName 'chineseaddressoccaddon'
+        // extName 'chineseaddressservices'
+        // extName 'chinesecommerceorgaddressaddon'
+        // extName 'chinesecommerceorgaddressfacades'
+    // china-accelerator-alipay-psp
+        // extName 'chinesepspalipaysamplesaddon'
+        // extName 'chinesepspalipaysbackoffice'
+        // extName 'chinesepspalipayservices'
+    // china-accelerator-logistics
+        // extName 'chineselogisticaddon'
+        // extName 'chineselogisticbackoffice'
+        // extName 'chineselogisticfacades'
+        // extName 'chineselogisticoccaddon'
+        // extName 'chineselogisticservices'
+    // china-accelerator-payment
+        // extName 'chinesepaymentaddon'
+        // extName 'chinesepaymentfacades'
+        // extName 'chinesepaymentmock'
+        // extName 'chinesepaymentoccaddon'
+        // extName 'chinesepaymentservices'
+    // china-accelerator-people-profile
+        // extName 'chineseprofileaddon'
+        // extName 'chineseprofilefacades'
+        // extName 'chineseprofileoccaddon'
+        // extName 'chineseprofileservices'
+    // china-accelerator-tax-invoice
+        // extName 'chinesetaxinvoiceaddon'
+        // extName 'chinesetaxinvoicebackoffice'
+        // extName 'chinesetaxinvoicefacades'
+        // extName 'chinesetaxinvoiceoccaddon'
+        // extName 'chinesetaxinvoiceservices'
+    // china-accelerator-wechat-psp
+        // extName 'chinesepspwechatpaymentaddon'
+        // extName 'chinesepspwechatpaysamplesaddon'
+        // extName 'chinesepspwechatpaysbackoffice'
+        // extName 'chinesepspwechatpayservices'
+    // cockpit-applications
+        // extName 'admincockpit' // deprecated
+        // extName 'importcockpit' // deprecated
+        // extName 'productcockpit' // deprecated
+    // cockpit-core
+        // extName 'cockpit' // deprecated
+    // commerce-infrastructure-services-client
+        // extName 'cisavs'
+        // extName 'cisclient'
+        // extName 'cisclienttest'
+        // extName 'cispayment'
+        // extName 'cistax'
+    // commerce-services
+        // extName 'commercefacades'
+        // extName 'commerceservices'
+        extName 'commerceservicesbackoffice'
+        // extName 'commercewebservicescommons'
+        extName 'commercewebservices' // CEP
+        extName 'commercewebservicestests' // CEP
+        // extName 'ycommercewebservices'
+        // extName 'ycommercewebservicestest'
+        // extName 'yoccaddon'
+    // configurable-bundle
+        // extName 'configurablebundleaddon'
+        // extName 'configurablebundlefacades'
+        // extName 'configurablebundleservices'
+        // extName 'configurablebundlecockpits' // deprecated
+    // consignment-tracking
+        extName 'consignmenttrackingaddon'
+        extName 'consignmenttrackingbackoffice'
+        // extName 'consignmenttrackingfacades'
+        // extName 'consignmenttrackingmock'
+        extName 'consignmenttrackingoccaddon'
+        // extName 'consignmenttrackingservices'
+    // core-accelerator
+        // extName 'acceleratorbackoffice'
+        // extName 'acceleratorcms'
+        // extName 'acceleratorfacades'
+        // extName 'acceleratorservices'
+        // extName 'acceleratorstorefrontcommons'
+        // extName 'acceleratorwebservicesaddon'
+        extName 'acceleratorocc' // CEP
+        // extName 'addonsupport'
+    // coupon
+        extName 'couponbackoffice'
+        extName 'couponfacades'
+        // extName 'couponservices'
+        // extName 'couponwebservices'
+    // customer-coupon
+        // extName 'customercouponaddon'
+        // extName 'customercouponbackoffice'
+        // extName 'customercouponfacades'
+        // extName 'customercouponoccaddon'
+        // extName 'customercouponsamplesaddon'
+        // extName 'customercouponservices'
+    // customer-interest
+        // extName 'customerinterestsaddon'
+        // extName 'customerinterestsfacades'
+        // extName 'customerinterestsoccaddon'
+        // extName 'customerinterestsservices'
+    // customer-service
+        extName 'customersupportbackoffice'
+        extName 'customerticketingaddon'
+        // extName 'customerticketingfacades'
+        // extName 'ticketsystem'
+        extName 'ticketsystembackoffice'
+    // data-hub-adapter
+        // extName 'datahubadapter'
+        // extName 'datahubbackoffice'
+        // extName 'datahubclient'
+        // extName 'dataimportcommons'
+    // entitlements
+        extName 'entitlementbackoffice'
+        extName 'entitlementfacades'
+        // extName 'entitlementservices'
+    // event-tracking
+        // extName 'eventtrackingmodel'
+        // extName 'eventtrackingpublisher'
+        // extName 'eventtrackingservices'
+        // extName 'eventtrackingwsaddon'
+    // hybris-utilities
+        // extName 'hybrisdatasupplier'
+        // extName 'hybrisdatasupplierbackoffice'
+        // extName 'hybrisrootcauseanalysis'
+        // extName 'hybristransportandchange'
+    // integration-apis
+        extName 'inboundservices' // CEP
+        extName 'integrationbackoffice' // CEP
+        extName 'integrationbackofficetest' // CEP
+        extName 'integrationmonitoringbackoffice' // CEP
+        extName 'integrationservices' // CEP
+        extName 'odata2services' // CEP
+        extName 'odata2webservices' // CEP
+        extName 'odata2webservicesfeaturetests' // CEP
+        extName 'outboundservices' // CEP
+        extName 'outboundsync' // CEP
+        extName 'outboundsyncbackoffice' // CEP
+    // marketplace
+        // extName 'marketplaceaddon'
+        // extName 'marketplacebackoffice'
+        // extName 'marketplacebackofficesamplesaddon'
+        // extName 'marketplacefacades'
+        // extName 'marketplaceoccaddon'
+        // extName 'marketplacepromotionenginesamplesaddon'
+        // extName 'marketplaceservices'
+        // extName 'marketplacestore'
+        // extName 'yacceleratormarketplaceintegration'
+    // messagecenter
+        // extName 'messagecentercsfacades'
+        // extName 'messagecentercsoccaddon'
+        // extName 'messagecentercsservices'
+    // notification
+        // extName 'notificationaddon'
+        // extName 'notificationfacades'
+        // extName 'notificationoccaddon'
+        // extName 'notificationservices'
+    // npm-ancillary
+        // extName 'npmancillary'
+    // ondemand-connect
+        // extName 'ondemandcommon'
+        // extName 'ondemandsampledata'
+    // order-management
+        // extName 'b2bordermanagementfacades'
+        extName 'b2bordermanagementwebservices'
+        extName 'ordermanagementaddon'
+        // extName 'ordermanagementfacades'
+        extName 'ordermanagementwebservices'
+        extName 'orderselfserviceaddon'
+        extName 'warehousing'
+        extName 'warehousingbackoffice'
+        // extName 'warehousingfacades'
+        extName 'warehousingwebservices'
+        extName 'yacceleratorordermanagement'
+    // personalization
+        // extName 'personalizationcms'
+        // extName 'personalizationcmsbackoffice'
+        // extName 'personalizationcmsweb'
+        // extName 'personalizationfacades'
+        // extName 'personalizationsampledataaddon'
+        // extName 'personalizationservices'
+        // extName 'personalizationservicesbackoffice'
+        // extName 'personalizationsmartedit'
+        // extName 'personalizationwebservices'
+        // extName 'previewpersonalizationweb'
+    // personalization-integration
+        // extName 'personalizationaddon'
+        // extName 'personalizationintegration'
+        // extName 'personalizationintegrationbackoffice'
+        // extName 'personalizationyprofile'
+        // extName 'personalizationyprofilesampledataaddon'
+    // personalization-promotion
+        // extName 'personalizationpromotions'
+        // extName 'personalizationpromotionsbackoffice'
+        // extName 'personalizationpromotionssampledataaddon'
+        // extName 'personalizationpromotionssmartedit'
+        // extName 'personalizationpromotionsweb'
+    // personalization-search
+        // extName 'personalizationsearch'
+        // extName 'personalizationsearchbackoffice'
+        // extName 'personalizationsearchsamplesaddon'
+        // extName 'personalizationsearchsmartedit'
+        // extName 'personalizationsearchweb'
+    // platform
+        extName 'adminapi'
+        // extName 'amazoncloud'
+        // extName 'auditreportservices'
+        // extName 'azurecloud'
+        // extName 'deltadetection'
+        // extName 'ldap' // deprecated
+        // extName 'y2ysync' // deprecated
+        // extName 'y2ysyncdemoelectronics' // deprecated
+        // extName 'embeddedserver'
+        // extName 'gridfsstorage'
+        // extName 'groovynature'
+        // extName 'mediaconversion'
+        // extName 'patches'
+        // extName 'patchesdemo'
+        // extName 'samlsinglesignon'
+        // extName 'springintegrationlibs'
+        // extName 'tomcatembeddedserver'
+        // extName 'ydocumentcart'
+        // extName 'yempty'
+        // extName 'yhacext'
+        // extName 'yvoid'
+    // promotion-engine
+        // extName 'promotionenginebackoffice'
+        extName 'promotionenginesamplesaddon'
+        // extName 'promotionengineservices'
+    // rule-engine
+        extName 'droolsruleengineservices'
+        // extName 'ordercalculation'
+        extName 'rulebuilderbackoffice'
+        // extName 'ruledefinitions'
+        // extName 'ruleengine'
+        // extName 'ruleenginebackoffice'
+        // extName 'ruleengineservices'
+    // sap-asynchronous-order-management
+         extName 'saporderexchange'
+         extName 'saporderexchangeb2b'
+         extName 'saporderexchangebackoffice'
+         extName 'ysaporderfulfillment'
+    // sap-asynchronous-order-management-system
+         extName 'saporderexchangeoms'
+         extName 'saporderexchangeomsb2b'
+         extName 'ysapomsfulfillment'
+    // sap-availability
+        // extName 'b2bsapproductavailability'
+        // extName 'sapproductavailability'
+        // extName 'sapproductavailabilitybackoffice'
+    // sap-billing
+        // extName 'sapinvoiceaddon'
+        // extName 'sapinvoicebol'
+        // extName 'sapinvoicefacades'
+        // extName 'sapinvoiceservices'
+    // sap-ccv2-hotfolder
+        // extName 'azurecloudhotfolder' // CEP
+        // extName 'cloudcommons' // CEP
+        // extName 'cloudhotfolder' // CEP
+    // sap-cloud-platform-extension-factory-integration
+        extName 'kymaintegrationbackoffice'
+        // extName 'kymaintegrationservices'
+    // sap-cpq-integration
+        // extName 'sapproductcpqintegration' // CEP
+        // extName 'sapquoteintegration' // CEP
+        // extName 'sapquoteintegrationaddon' // CEP
+        // extName 'sapquoteintegrationoms' // CEP
+    // sap-credit
+        // extName 'sapcreditcheck'
+        // extName 'sapcreditcheckbackoffice'
+    // sap-customer
+        // extName 'sapcustomerb2b' // CEP
+        // extName 'sapcustomerb2bbackoffice' // CEP
+        // extName 'sapcustomerb2c' // CEP
+    // sap-customer-activity-repository
+        // extName 'sapcarcommercefacades'
+        // extName 'sapcarintegration'
+        // extName 'sapcarintegrationaddon'
+        // extName 'sappostransactionaddon'
+    // sap-customer-data-cloud
+        // extName 'gigyab2bbackoffice' // CEP
+        // extName 'gigyab2bfacades' // CEP
+        // extName 'gigyab2bloginaddon' // CEP
+        // extName 'gigyab2bservices' // CEP
+        // extName 'gigyabackoffice' // CEP
+        // extName 'gigyacpicustomerexchangemdm' // CEP
+        // extName 'gigyacpicustomerexchangemdmb2b' // CEP
+        // extName 'gigyafacades' // CEP
+        // extName 'gigyaloginaddon' // CEP
+        // extName 'gigyaservices' // CEP
+        // extName 'gigyauserdeleteservices' // CEP
+    // sap-customerlookup
+        // extName 'sapcpicustomerexchangemdm' // CEP
+        // extName 'sapcustomerlookupaddon' // CEP
+        // extName 'sapcustomerlookupservice' // CEP
+    // sap-digital-payments
+        // extName 'cissapdigitalpayment' // CEP
+        // extName 'sapdigitalpaymentaddon' // CEP
+        // extName 'sapdigitalpaymentb2baddon' // CEP
+        // extName 'sapdigitalpaymentbackoffice' // CEP
+        // extName 'ysapdpordermanagement' // CEP
+    // sap-framework-core
+        // extName 'sapcoreodata' // deprecated
+        // extName 'sapcore'
+        // extName 'sapcoreaddon'
+        // extName 'sapcorebol'
+        // extName 'sapcoreconfiguration'
+        // extName 'sapcoreconfigurationbackoffice'
+        // extName 'sapcorejco'
+        // extName 'sapcorejcorec'
+        // extName 'sapcoretest'
+    // sap-entitlements
+        // extName 'sapentitlementsaddon' // CEP
+        // extName 'sapentitlementsintegration' // CEP
+        // extName 'sapentitlementsintegrationb2b' // CEP
+    // sap-ias-integration
+        extName 'scimfacades' // CEP
+        extName 'scimfacadescep' // CEP
+        extName 'scimservices' // CEP
+        extName 'scimwebservices' // CEP
+    // sap-marketing-cloud
+        // extName 'sapymktsync' // CEP deprecated
+        extName 'personalizationymkt' // CEP
+        extName 'sapymktclickstream' // CEP
+        extName 'sapymktcommon' // CEP
+        extName 'sapymktconsent' // CEP
+        extName 'sapymktdatareplication' // CEP
+        extName 'sapymktrecommendation' // CEP
+        extName 'sapymktrecommendationaddon' // CEP
+        extName 'sapymktrecommendationbuffer' // CEP
+        extName 'sapymktrecommendationwebservices' // CEP
+        extName 'sapymktsegmentation' // CEP
+        extName 'sapymktsegmentationb2b' // CEP
+        extName 'sapymktsegmentationwebservices' // CEP
+    // sap-model
+        // extName 'sapmodel'
+        // extName 'sapmodelbackoffice'
+    // sap-pricing
+        // extName 'b2bsappricing'
+        // extName 'sappricing'
+        // extName 'sappricingbackoffice'
+        // extName 'sappricingbol'
+        // extName 'sappricingproductcarouseladdon'
+    // sap-product-configuration
+        extName 'sapproductconfigb2b'
+        extName 'sapproductconfigb2baddon'
+        extName 'sapproductconfigb2bservices'
+        extName 'sapproductconfigbackoffice'
+        extName 'sapproductconfigbackofficecps'
+        // extName 'sapproductconfigcpiorderexchange'
+        // extName 'sapproductconfigcpiorderexchangecps'
+        // extName 'sapproductconfigcpiquoteexchange'
+        // extName 'sapproductconfigfacades'
+        // extName 'sapproductconfigpricingbol'
+        // extName 'sapproductconfigrules'
+        // extName 'sapproductconfigrulesbackoffice'
+        // extName 'sapproductconfigrulescps'
+        extName 'sapproductconfigruntimecps'
+        extName 'sapproductconfigruntimeinterface'
+        extName 'sapproductconfigruntimemock'
+        // extName 'sapproductconfigruntimepci'
+        extName 'sapproductconfigservices'
+        extName 'ysapproductconfigaddon'
+    // sap-product-configuration-cep
+        extName 'sapproductconfigceppricing' // CEP
+    // sap-product-configuration-on-premise-edition
+        // extName 'sapproductconfigbackofficessc'
+        // extName 'sapproductconfigcpiorderexchangessc'
+        // extName 'sapproductconfigmodel'
+        // extName 'sapproductconfigruntimessc'
+        // extName 'sapproductconfigservicesssc'
+        // extName 'sapproductconfigsombol'
+        // extName 'sapproductconfigsomfacades'
+        // extName 'sapproductconfigsomservices'
+    // sap-qualtrics
+        // extName 'sapqualtricsaddon' // CEP
+    // sap-retail
+        // extName 'saparticleb2caddon' // CEP
+        // extName 'saparticlebackoffice' // CEP
+        // extName 'saparticlemodel' // CEP
+        // extName 'saparticlesearch' // CEP
+        // extName 'sapcpiadmintegration' // CEP
+        // extName 'sapcpioaaintegration' // CEP
+        // extName 'sapcpioaaorderintegration' // CEP
+        // extName 'sapoaaaddon' // CEP
+        // extName 'sapoaabackoffice' // CEP
+        // extName 'sapoaacommercefacades' // CEP
+        // extName 'sapoaacommerceservices' // CEP
+        // extName 'sapoaacosintegration' // CEP
+        // extName 'sapoaamodel' // CEP
+        // extName 'sapppspricing' // CEP
+    // sap-return-order
+        // extName 'returnssupport' // CEP
+        // extName 'sapcpiomsreturnsexchange' // CEP
+        // extName 'sapcpireturnsexchange' // CEP
+        // extName 'sapreturnsbackoffice' // CEP
+        // extName 'sapreturnsexchange' // CEP
+        // extName 'sapreturnsexchangeb2b' // CEP
+        // extName 'ysaperpreturnprocess' // CEP
+        // extName 'ysapomsreturnprocess' // CEP
+    // sap-salesordersimulation
+        // extName 'sapsalesordersimulation' // CEP
+        // extName 'sapsalesordersimulationbackoffice' // CEP
+    // sap-service-cloud
+        // extName 'c4ccpiquote' // CEP
+        // extName 'c4ccustomer' // CEP
+        // extName 'c4cquote' // CEP
+        // extName 'customerticketingc4cb2bintegration'
+        // extName 'customerticketingc4cintegration'
+        // extName 'sapc4ccustomerb2c' // CEP
+    // sap-serviceorder-management
+        // extName 'sapbillinginvoiceaddon' // CEP
+        // extName 'sapbillinginvoicefacades' // CEP
+        // extName 'sapbillinginvoiceservices' // CEP
+        // extName 'sapserviceorder' // CEP
+        // extName 'sapserviceorderaddon' // CEP
+        // extName 'sapserviceorderbackoffice' // CEP
+        // extName 'sapserviceorderfacades' // CEP
+        // extName 'sapserviceproduct' // CEP
+        // extName 'ysapcpis4cmomsfulfillment' // CEP
+    // sap-subscription-billing
+        // extName 'sapimpeximportadapter' // CEP
+        // extName 'saprevenuecloudbackoffice' // CEP
+        // extName 'saprevenuecloudcustomer' // CEP
+        // extName 'saprevenueclouddpaddon' // CEP
+        // extName 'saprevenuecloudorder' // CEP
+        // extName 'saprevenuecloudproduct' // CEP
+        // extName 'sapsubscriptionaddon' // CEP
+        // extName 'scpiconnector' // CEP
+        // extName 'scpiconnectorbackoffice' // CEP
+        // extName 'ysapcpircomsfulfillment' // CEP
+        // extName 'ysaprcomsfulfillment' // CEP
+    // sap-synchronous-order-management
+        // extName 'sapcommonbol'
+        // extName 'sapordermgmtb2bfacades'
+        // extName 'sapordermgmtb2bservices'
+        // extName 'sapordermgmtbackoffice'
+        // extName 'sapordermgmtbol'
+        // extName 'sapordermgmtservices'
+        // extName 'ysapordermgmtb2baddon'
+    // scpi
+        // extName 'sapcpiadapter' // CEP
+        // extName 'sapcpicustomerexchange' // CEP
+        // extName 'sapcpicustomerexchangeb2b' // CEP
+        // extName 'sapcpiorderexchange' // CEP
+        // extName 'sapcpiorderexchangeb2b' // CEP
+        // extName 'sapcpiproductexchange' // CEP
+    // scpi-order-management-system
+        extName 'sapcpiorderexchangeoms' // CEP
+        extName 'sapcpiorderexchangeomsb2b' // CEP
+        extName 'ysapcpiomsfulfillment' // CEP
+    // search-and-navigation
+        // extName 'solrfacetsearch'
+        extName 'solrfacetsearchbackoffice'
+        extName 'solrserver'
+    // sec-customer-service
+        // extName 'agentdesktopdataexchange'
+        // extName 'agentdesktopdataexchangeb2b'
+        // extName 'agentdesktopdataexchangecore'
+        // extName 'cecsso'
+        // extName 'eventpublisher'
+        // extName 'eventpublisherb2b'
+        // extName 'samlcommercesecsso'
+        // extName 'sapcpconfiguration'
+        // extName 'sapcpconfigurationbackoffice'
+        // extName 'secaddon'
+    // selective-cart
+        // extName 'selectivecartaddon'
+        // extName 'selectivecartfacades'
+        // extName 'selectivecartservices'
+        // extName 'selectivecartsplitlistaddon'
+    // smartedit
+        extName 'cmssmartedit'
+        extName 'cmssmarteditwebservices'
+        extName 'smartedit'
+        extName 'smarteditaddon'
+        extName 'smarteditwebservices'
+        extName 'smarteditcep' // CEP
+        // extName 'ysmarteditmodule'
+    // stock-notification
+        // extName 'stocknotificationaddon'
+        // extName 'stocknotificationfacades'
+        // extName 'stocknotificationservices'
+    // subscription-bundles
+        // extName 'subscriptionbundlecockpits' // deprecated
+        // extName 'subscriptionbundlefacades'
+        // extName 'subscriptionbundleservices'
+    // subscriptions
+        // extName 'cissubscription'
+        // extName 'subscriptioncockpits' // deprecated
+        // extName 'subscriptionbackoffice'
+        // extName 'subscriptionfacades'
+        // extName 'subscriptionservices'
+    // text-field-configurator-template
+        // extName 'textfieldconfiguratortemplateaddon'
+        // extName 'textfieldconfiguratortemplatebackoffice'
+        // extName 'textfieldconfiguratortemplatefacades'
+        // extName 'textfieldconfiguratortemplateoccaddon'
+        // extName 'textfieldconfiguratortemplateocctest'
+        extName 'textfieldconfiguratortemplateservices'
+    // timed-access-promotion-engine
+        // extName 'timedaccesspromotionengineaddon'
+        // extName 'timedaccesspromotionenginebackoffice'
+        // extName 'timedaccesspromotionenginefacades'
+        // extName 'timedaccesspromotionengineoccaddon'
+        // extName 'timedaccesspromotionenginesamplesaddon'
+        // extName 'timedaccesspromotionengineservices'
+    // web-content-management-system
+        // extName 'cms2'
+        // extName 'cms2lib'
+        // extName 'cmscockpit' // CEP
+        extName 'cmsbackoffice'
+        // extName 'cmsfacades'
+        // extName 'cmsoccaddon'
+        extName 'cmsocc' // CEP
+        extName 'cmswebservices'
+        extName 'previewwebservices'
+    // web-services-commons
+        // extName 'permissionsfacades'
+        extName 'permissionswebservices'
+        // extName 'webservicescommons'
+        // extName 'ywebservices'
+    // yforms
+        extName 'orbeonweb'
+        extName 'xyformsbackoffice'
+      //   extName 'xyformsfacades'
+        extName 'xyformssamples'
+        extName 'xyformsservices'
+        extName 'xyformsstorefrontcommons'
+    }
+
+    addons {
+    forStoreFronts('yacceleratorstorefront,yb2bacceleratorstorefront') {
+        names(
+            //    'acceleratorwebservicesaddon',
+            // 'accountsummaryaddon',
+            'adaptivesearchsamplesaddon',
+            //'assistedservicecustomerinterestsaddon',
+            //'assistedservicepromotionaddon',
+            'assistedservicestorefront',
+            //    'assistedserviceyprofileaddon',
+            //  'b2bacceleratoraddon',
+            //  'b2boccaddon',
+            //  'b2bpunchoutaddon',
+            //  'captchaaddon',
+            //    'chineseaddressaddon',
+            //  'chinesecommerceorgaddressaddon',
+            //    'chineselogisticaddon',
+            //    'chinesepaymentaddon',
+            //    'chineseproductsharingaddon',
+            //    'chineseprofileaddon',
+            //    'chinesepspalipaysamplesaddon',
+            //    'chinesepspwechatpaymentaddon',
+            //    'chinesepspwechatpaysamplesaddon',
+            //    'chinesestoreaddon',
+            //    'chinesetaxinvoiceaddon',
+            //  'commerceorgaddon',
+            'commerceorgsamplesaddon',
+            //    'configurablebundleaddon',
+            'consignmenttrackingaddon',
+            //    'customercouponaddon',
+            //    'customercouponsamplesaddon',
+            //    'customerinterestsaddon',
+            'customerticketingaddon',
+            //    'eventtrackingwsaddon',
+            //    'gigyaloginaddon',
+            //    'hybrisanalyticsaddon',
+            //    'marketplaceaddon',
+            //    'marketplacebackofficesamplesaddon',
+            //    'marketplacepromotionenginesamplesaddon',
+            //    'merchandisingaddon',
+            //    'merchandisingstorefrontsampledataaddon',
+            'multicountrysampledataaddon',
+            //    'notificationaddon',
+            'ordermanagementaddon',
+            'orderselfserviceaddon',
+            'pcmbackofficesamplesaddon',
+            //    'personalizationaddon',
+            //    'personalizationpromotionssampledataaddon',
+            //'personalizationsampledataaddon',
+            //    'personalizationsearchsamplesaddon',
+            //    'personalizationyprofilesampledataaddon',
+            //    'profiletagaddon',
+            'promotionenginesamplesaddon',
+            //    'sapcarintegrationaddon',
+            //    'sapcoreaddon',
+            //    'sapdigitalpaymentaddon',
+            //  'sapdigitalpaymentb2baddon',
+            //    'sapinvoiceaddon',
+            //    'sappostransactionaddon',
+            //    'sappricingproductcarouseladdon',
+            //    'sapquoteintegrationaddon',
+            //    'saprevenueclouddpaddon',
+            //    'sapsubscriptionaddon',
+                'sapymktrecommendationaddon',
+            //    'secaddon',
+            //  'secureportaladdon',
+            //    'selectivecartaddon',
+            //    'selectivecartsplitlistaddon',
+            'smarteditaddon',
+            //    'stocknotificationaddon',
+            // 'textfieldconfiguratortemplateaddon',
+            //    'timedaccesspromotionengineaddon',
+            //    'timedaccesspromotionenginesamplesaddon',
+            //    'verticalnavigationaddon',
+            'xyformssamples',
+            'xyformsstorefrontcommons'
+            // 'ysapordermgmtb2baddon',
+            //    'ysapproductconfigaddon'
+        )
+        template 'yacceleratorstorefront'
+    }
+
+    forStoreFronts('yb2bacceleratorstorefront') {
+        names(
+            // 'accountsummaryaddon',
+            // 'adaptivesearchsamplesaddon',
+            // 'assistedservicestorefront',
+            'b2bacceleratoraddon',
+            // 'b2boccaddon',
+            // 'b2bpunchoutaddon',
+            // 'captchaaddon',
+            // 'chineseaddressaddon',
+            // 'chinesecommerceorgaddressaddon',
+            // 'chinesestoreaddon',
+            'commerceorgaddon',
+            // 'commerceorgsamplesaddon',
+            // 'configurablebundleaddon',
+            // 'consignmenttrackingaddon',
+            // 'customerticketingaddon',
+            // 'orderselfserviceaddon',
+            // 'pcmbackofficesamplesaddon',
+            // 'personalizationsearchsamplesaddon'
+            // 'promotionenginesamplesaddon',
+            // 'sapcoreaddon',
+            // 'sapdigitalpaymentb2baddon',
+            'sapproductconfigb2baddon',
+            // 'secureportaladdon',
+            // 'smarteditaddon',
+            // 'textfieldconfiguratortemplateaddon'
+            // 'ysapordermgmtb2baddon',
+            'ysapproductconfigaddon'
+        )
+        template 'yacceleratorstorefront'
+    }
+    }
+}
+
+task createStoreFrontExt {
+    doLast {
+        def prePlatform = platformFactory.createPlatform()
+        prePlatform.createConfigDirIfNotExist()
+        prePlatform.resetConfig()
+
+        prePlatform.createExtension {
+            templateName 'yacceleratorstorefront'
+            extensionName 'yb2bacceleratorstorefront'
+            packageName 'de.hybris.platform.yb2bacceleratorstorefront'
+        }
+    }
+}
+
+task setup(dependsOn: createStoreFrontExt) {
+    doLast {
+        platform.setup()
+    }
+}
+
+task buildSystem(dependsOn: setup) {
+    doLast {
+        platform.build()
+    }
+}
+
+task initialize(dependsOn: buildSystem) {
+    doLast {
+        platform.initialize()
+    }
+}
+
+task start {
+    doLast {
+        platform.start()
+    }
+}
+
+task startInBackground {
+    doLast {
+        pl.startInBackground()
+    }
+}
+
+task stopInBackground {
+    doLast {
+        pl.stopInBackground()
+    }
+}
