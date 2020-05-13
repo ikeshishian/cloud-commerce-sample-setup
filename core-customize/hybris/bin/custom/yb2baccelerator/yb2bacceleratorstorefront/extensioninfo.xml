@@ -5,7 +5,23 @@
         	
     
     <extension abstractclassprefix="Generated" classprefix="Yb2bacceleratorStorefront" name="yb2bacceleratorstorefront" usemaven="false">
-                		
+                                                                                                                                                		
+        <requires-extension name="personalizationaddon"/>
+        <requires-extension name="personalizationsearchsamplesaddon"/>
+        <requires-extension name="eventtrackingwsaddon"/>
+        <requires-extension name="hybrisanalyticsaddon"/>
+        <requires-extension name="pcmbackofficesamplesaddon"/>
+        <requires-extension name="multicountrysampledataaddon"/>
+        <requires-extension name="adaptivesearchsamplesaddon"/>
+        <requires-extension name="orderselfserviceaddon"/>
+        <requires-extension name="customerticketingaddon"/>
+        <requires-extension name="assistedservicepromotionaddon"/>
+        <requires-extension name="assistedservicestorefront"/>
+        <requires-extension name="textfieldconfiguratortemplateaddon"/>
+        <requires-extension name="smarteditaddon"/>
+        <requires-extension name="promotionenginesamplesaddon"/>
+        <requires-extension name="commerceorgsamplesaddon"/>
+        <requires-extension name="spartacussampledataaddon"/>
         
         <requires-extension name="commerceorgaddon"/>
         <requires-extension name="b2bacceleratoraddon"/>
