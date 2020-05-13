@@ -13,8 +13,6 @@
     <extension name='solrserver' />
     <extension name='ycommercewebservices' />
     <extension name='ycommercewebservicestest' />
-    <extension name='yacceleratorcore' />
-    <extension name='yacceleratorstorefront' />
     <extension name='electronicsstore' />
     <extension name='acceleratorwebservicesaddon' />
     <extension name='orderselfserviceaddon' />
@@ -91,6 +89,18 @@
     <extension name="saporderexchangebackoffice"/>
     <extension name="sapcoreaddon"/>-->
 
+    <extension name="yb2bacceleratorfulfilmentprocess"/>
+    <extension name="yb2bacceleratorcore"/>
+    <extension name="yb2bacceleratorinitialdata"/>
+    <extension name="yb2bacceleratorfacades"/>
+    <extension name="yb2bacceleratortest"/>
+    <extension name="yb2bacceleratorstorefront"/>
+    <extension name="yb2bacceleratorbackoffice"/>
 
+    <extension name='powertoolsstore' />
+    <extension name='b2bcommercebackoffice' />
+    <extension name='b2bacceleratoraddon' />
+    <extension name='commerceorgaddon' />
+	
   </extensions>
 </hybrisconfig>
