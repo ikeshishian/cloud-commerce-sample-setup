@@ -9,5 +9,5 @@ $solrIndexedType=electronicsProductType
 $lang=en
 
 # Solr Indexed Property
-UPDATE SolrIndexedProperty;solrIndexedType(identifier)[unique=true];name[unique=true];displayName[lang=$lang]
-;$solrIndexedType;customerCouponCode;"Customer coupon code"
+#UPDATE SolrIndexedProperty;solrIndexedType(identifier)[unique=true];name[unique=true];displayName[lang=$lang]
+#;$solrIndexedType;customerCouponCode;"Customer coupon code"
