@@ -91,3 +91,8 @@ eclipsebin/
 **/resources/spartacussampledataaddon/import/contentCatalogs/*ContentCatalog/cms-responsive-content_*.impex
 **/resources/spartacussampledataaddon/import/contentCatalogs/*ContentCatalog/email-content_*.impex
 **/resources/spartacussampledataaddon/import/stores/*/consents_*.impex
+
+# allow only installer recipes
+**/installer/*
+!**/installer/recipes/
+
