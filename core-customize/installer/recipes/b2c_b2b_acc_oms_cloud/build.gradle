@@ -116,6 +116,7 @@ def platform = platform {
     // b2c-accelerator
         extName 'apparelstore'
         extName 'electronicsstore'
+		extName 'spartacussampledataaddon'
     // b2c-accelerator-addons
         // extName 'captchaaddon'
         // extName 'hybrisanalyticsaddon'
@@ -701,6 +702,7 @@ def platform = platform {
     addons {
     forStoreFronts('yacceleratorstorefront,yb2bacceleratorstorefront') {
         names(
+			'spartacussampledataaddon',
             //    'acceleratorwebservicesaddon',
             // 'accountsummaryaddon',
             'adaptivesearchsamplesaddon',
